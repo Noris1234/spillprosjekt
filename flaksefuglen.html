@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>flaksefuglen</title>
+    <style>
+        #spill{
+            position: relative;
+            background-image: url("#");
+            width: 288px;
+            height: 384px;
+        }
+        #boks{
+            position: absolute;
+            background-image: url("#");
+            width: 34px;
+            height: 24px;
+            left: 30px;
+        }
+    </style>
+</head>
+<body>
+<div id="spill"> <div id="boks"></div></div>
+
+<script>
+    let spill = document.getElementById("spill");
+    let boks = document.getElementById("boks");
+    let krasjhoyde = 360; //så lang ned den faller
+    let bokspos = 100; //y posisjon til boks
+    let boksFlyr = true; //settes til fals når den kræsjer
+    let gravitasjon = 0.1; //faller fortere og fortere
+    let fallfart = 1; //utgangsfart for fall
+    let bgpos = 0; //bakgrunnsposisjon
+    let bgfart = -1; //bakgrunn flutter seg til venstre
+    function fly() {
+        fallfart += gravitasjon; //legger på gravitasjon
+        bokspos += fallfart; //settes ny posisjon
+        boks.style.top = bokspos + "px"; //setter CSS
+        if (bokspos > krasjhoyde){ //hvis den treffer bunn
+            boksFlyr = false; //skal spillet stoppes
+        }
+    }
+    function bevegeBakgrunn() {
+        bgpos += bgfart;
+        spill.style.backgroundPosition = bgpos + "px 0px";
+    }
+    function gameLoop() {
+        bevegeBakgrunn();
+        fly();
+        if (boksFlyr){ //sjekker om den fortsatt flyr
+            requestAnimationFrame(gameLoop); //starter på nytt
+        }
+    }
+    gameLoop();
+    function flaks() {
+        fallfart = -4; //flyr opp
+    }
+    spill.onclick = flaks; //klikk på spill-div starter funksjon
+
+</script>
+
+</body>
+</html>

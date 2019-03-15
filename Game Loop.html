@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>GameLoop</title>
+</head>
+<body>
+
+<span id="visTall"></span>
+
+<script>
+    var visTall = document.getElementById("visTall"); //referer til span-element
+    var tall = 0; //tallet starter på null
+    function oppdaterTall() { //rekursiv funkjson
+        tall = tall + 5;
+        visTall.innerHTML = tall; //viser tall i et span-element
+        oppdaterTall(); //rekursiv funksjon
+    }
+    oppdaterTall(); //funksjonskall
+</script>
+
+</body>
+</html>

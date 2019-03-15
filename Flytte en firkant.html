@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>FLytte en firkant</title>
+</head>
+<body>
+<canvas id="minCanvas" width="400" height="400"></canvas>
+
+<script>
+    let minCanvas = document.getElementById("minCanvas");
+    let ctx = minCanvas.getContext("2d");
+    let firkant = {
+        "bredde": 40,
+        "hoyde": 20,
+        "farge": "DarkGreen",
+        "xpos": 180,
+        "ypos": 40,
+        "xfart": 3,
+        "yfart": 3,
+        "xretning": 0,//retning til høyre
+        "yretning": 0
+    };
+
+    function gameloop() {
+        tegnBak();
+        flyttFirkant();
+        tegnFirkant();
+        trefferVegg();
+        requestAnimationFrame(gameloop);
+    }
+
+    function flyttFirkant() {
+        firkant.xpos = firkant.xpos + (firkant.xretning*firkant.xfart);
+        firkant.ypos = firkant.ypos + (firkant.yretning*firkant.yfart);
+    }
+    function tegnBak() {
+        ctx.fillStyle = "DarkOrange";
+        ctx.fillRect(0,0,400,400);
+    }
+
+    function tegnFirkant() {
+        ctx.fillStyle = firkant.farge;
+        ctx.fillRect(firkant.xpos, firkant.ypos, firkant.bredde, firkant.hoyde);
+
+    }
+     function trefferVegg() {
+         if (firkant.xpos <= 0) {
+             firkant.xretning = 1; //snur og går til høyre
+         }
+         if (firkant.xpos + firkant.bredde >= minCanvas.width) {
+             firkant.xretning = -1;
+         }
+
+         if (firkant.ypos <= 0){
+             firkant.yretning = 1;
+         }
+         if (firkant.ypos + firkant.hoyde >= minCanvas.height){
+            firkant.yretning = -1;
+         }
+     }
+
+
+    gameloop();
+    document.onkeydown = function (evt) {
+           let tast = evt.code;
+           console.log(tast)
+           if (tast==="ArrowLeft"){
+               firkant.xretning = -1;
+           }
+           if (tast==="ArrowRight"){
+               firkant.xretning = 1;
+           }
+           if (tast==="ArrowUp"){
+               firkant.yretning = -1;
+           }
+           if (tast==="ArrowDown"){
+               firkant.yretning = 1;
+           }
+    }
+</script>
+</body>
+</html>

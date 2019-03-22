@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>flaksefuglen</title>
+    <style>
+        #spill{
+           /* position: relative;*/
+            background-image: url("#");
+            width: 900px;
+            height: 500px;
+        }
+        #boks{
+            position: relative;
+            width: 94px;
+            height: 94px;
+            left: 30px;
+            overflow: hidden;
+
+        }
+        img{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="spill"> <div id="boks"> <img src="dinosaur.jpg"> </div> </div>
+
+
+
+
+<script>
+    let spill = document.getElementById("spill");
+    let boks = document.getElementById("boks");
+    let dinosaur = document.querySelector("img");
+    let krasjhoyde = 360; //så lang ned den faller
+    let bokspos = 100; //y posisjon til boks
+    let boksFlyr = true; //settes til fals når den kræsjer
+    let gravitasjon = 0.1; //faller fortere og fortere
+    let fallfart = 1; //utgangsfart for fall
+    let bgpos = 0; //bakgrunnsposisjon
+    let bgfart = -1; //bakgrunn flutter seg til venstre
+    function fly() {
+        fallfart += gravitasjon; //legger på gravitasjon
+        bokspos += fallfart; //settes ny posisjon
+        boks.style.top = bokspos + "px"; //setter CSS
+        if (bokspos > krasjhoyde){ //hvis den treffer bunn
+            boksFlyr = false; //skal spillet stoppes
+        }
+    }
+    function bevegeBakgrunn() {
+        bgpos += bgfart;
+        spill.style.backgroundPosition = bgpos + "px 0px";
+    }
+    function sjekkBakken() {
+        if (100 > krasjhoyde){
+            boksFlyr = false;
+            alert("Du er død");
+        }
+    }
+
+    let dinosaurCSS = [
+        {
+            left: "0px"
+        },
+        {
+            left:"-528px"
+        }
+    ];
+
+    let dinosaurEgenskaper = {
+        duration: 1500,
+        iterations: Infinity,
+        easing: "steps(6)"
+    };
+
+
+
+    function gameLoop() {
+        bevegeBakgrunn();
+        sjekkBakken();
+        fly();
+        if (boksFlyr){ //sjekker om den fortsatt flyr
+            requestAnimationFrame(gameLoop); //starter på nytt
+        }
+    }
+
+    gameLoop();
+    function flaks() {
+        fallfart = -4; //flyr opp
+    }
+    window.onclick = flaks; //klikk på spill-div starter funksjon
+
+    dinosaur.animate(dinosaurCSS,dinosaurEgenskaper);
+
+</script>
+
+</body>
+</html>

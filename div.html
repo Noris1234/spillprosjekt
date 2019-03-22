@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>Title</title>
+    <style>
+        #firkant{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: lightskyblue;
+        }
+        #hinder{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: limegreen;
+        }
+    </style>
+</head>
+<body>
+
+<div id="spill">
+    <div id="firkant"></div>
+    <div id="hinder"></div>
+</div>
+
+
+<button id="reload">Reload</button>
+
+<script>
+    const firkant = document.querySelector("#firkant");
+    const hinder = document.querySelector("#hinder");
+    const reload = document.querySelector("#reload");
+
+    let figur = {
+        x:50,
+        y:50,
+        xfart: 5,
+        xretning: 1,
+        hoyde: 50,
+        bredde: 50
+    };
+
+    let hinderE = {
+        x: 150,
+        y: 150,
+        xfart: 5,
+        yretning: 0,
+        hoyde: 50,
+        bredde: 50
+    };
+    let levende = true;
+
+    //hendelser
+    reload.onclick = function() {
+        location.reload();
+    };
+
+    //setup
+    gameloop();
+
+    //funksjonsdefinisjon
+    function gameloop() {
+        flytterFigur();
+        flytterHinder();
+        sjekkKollisjon();
+        if (levende){
+            requestAnimationFrame(gameloop);
+        }
+        requestAnimationFrame(gameloop);
+    }
+
+    function flytterFigur() {
+        figur.x= figur.x + figur.xfart*figur.xretning;
+        hinder.style.left = hinderE.x + "px"; //figuren skal gjøre det på nytt
+
+    }
+    function flytterHinder() {
+        hinderE.x= figur.x + hinderE.xfart*hinderE.xretning; // oppdaterer x posisjon til hinderet
+        firkant.style.left = figur.x + "px"; //figuren skal gjøre det på nytt
+
+    }
+
+    function sjekkKollisjon() {
+        console.log(figur.x + figur.bredde > hinderE.x, figur.x < hinderE.x + hinderE.bredde, figur.y + figur.hoyde < hinderE.y);
+        if (figur.x + figur.bredde >= hinderE.x && figur.x <= hinderE.x + hinderE.bredde
+        && figur.y + figur.hoyde <= hinderE.y && figur.y <= hinderE.y + hinderE.hoyde){
+            levende = false;
+        }
+    }
+
+</script>
+
+</body>
+</html>

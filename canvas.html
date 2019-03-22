@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300"></canvas>
+
+<script>
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+
+    let bilde = new Image;
+    bilde.src = "yang.jpg";
+
+    ctx.drawImage(bilde,10,10,200,200);
+
+    let startTid = new Date; //global variabel som henter ut datoen når siden lastes
+    let startSekund = startTid.getTime(); //henter tiden i sekunder
+    //console.log(startSekund);
+
+    function gameLoop() {
+
+        let frameDato = new Date; //Lokal variabel som henter datoen idet framen kjøres
+        let frameSekund = frameDato.getTime(); //henter tiden ut i sekunder
+
+
+        let tidPassert = ((frameSekund-startSekund)/1000);
+        console.log(tidPassert.toFixed(0));
+        requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+
+</script>
+
+</body>
+</html>

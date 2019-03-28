@@ -4,23 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, intial-scale=1">
     <title>FLytte en firkant</title>
+    <style>
+        #firkant{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: darkgreen;
+        }
+        #hinder{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
 <canvas id="minCanvas" width="400" height="400"></canvas>
+<div id="hinder"></div>
+<div id="firkant"></div>
 
 <script>
     let minCanvas = document.getElementById("minCanvas");
     let ctx = minCanvas.getContext("2d");
+    const hinder = document.querySelector("#hinder");
     let firkant = {
-        "bredde": 40,
-        "hoyde": 20,
-        "farge": "DarkGreen",
-        "xpos": 180,
-        "ypos": 40,
-        "xfart": 3,
-        "yfart": 3,
-        "xretning": 0,//retning til høyre
-        "yretning": 0
+        x:300,
+        y:150,
+        xfart: 5,
+        xretning: 1,
+        yfart: 5,
+        yretning: 0,
+        h: 50,
+        b: 50
+    };
+    let hinderE = {
+        x: 400,
+        y: 300,
+        xfart: 5,
+        xretning: 0,
+        yfart: 5,
+        yretning: 0,
+        h: 50,
+        b: 50
     };
 
     function gameloop() {
@@ -28,6 +54,7 @@
         flyttFirkant();
         tegnFirkant();
         trefferVegg();
+        flytterHinder();
         requestAnimationFrame(gameloop);
     }
 
@@ -60,8 +87,13 @@
             firkant.yretning = -1;
         }
     }
-
-
+    function flytterHinder() {
+        // Funksjons som flytter hinder i x- og y-retning
+        hinderE.x = hinderE.x + hinderE.xfart*hinderE.xretning; // Oppdaterer x posisjon til hinderet
+        hinderE.y = hinderE.y + hinderE.yfart*hinderE.yretning;
+        hinder.style.left = hinderE.x + "px"; // setter avstanden fra venstre til å være x-verdien
+        hinder.style.top = hinderE.x + "px";
+    }
 
 
     gameloop();

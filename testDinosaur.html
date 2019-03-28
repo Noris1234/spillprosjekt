@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>Title</title>
+    <style>
+        #firkant{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: lightskyblue;
+        }
+        #hinder{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: limegreen;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="minCanvas" width="400" height="400"></canvas>
+
+<div id="spill">
+    <div id="firkant"></div>
+    <div id="hinder"></div>
+</div>
+
+
+<button id="reload">Reload</button>
+
+<script>
+    const firkant = document.querySelector("#firkant"); //referer til div firkant
+    const hinder = document.querySelector("#hinder"); //referer til div hinder
+    const reload = document.querySelector("#reload"); //referer til button
+
+    let figur = {
+        x:150, //posisjone
+        y:150, //posisjon
+        xfart: 1, //farten til X
+        xretning: 1, //retningen til x, beveger seg med en
+        yfart: 5,
+        yretning: 0,
+        hoyde: 50, //høyden
+        bredde: 50 //bredden
+    };
+
+    let hinderE = {
+        x: 200, //posisjon
+        y: 40, //posisjon
+        xfart: 1, //farten til x
+        xretning: 0,
+        yfart: 5,
+        yretning: 0, //retningen til y, står stille
+        hoyde: 50, //høyden
+        bredde: 50 //bredden
+    };
+
+    let levende = true;
+    //Hendelser
+    reload.onclick = function(){
+        // Funksjon som laster siden på nytt
+        location.reload();
+    };
+
+
+    //Funksjonsdefinisjoner
+    function gameloop(){
+        flytterFigur();
+        flytterHinder();
+        sjekkKollisjon();
+        if(levende){
+            requestAnimationFrame(gameloop);
+        }
+    }
+    function flytterHinder() {
+        // Funksjons som flytter hinder i x- og y-retning
+        hinderE.x = hinderE.x + hinderE.xfart*hinderE.xretning; // Oppdaterer x posisjon til hinderet
+        hinderE.y = hinderE.y + hinderE.yfart*hinderE.yretning;
+        hinder.style.left = hinderE.x + "px"; // setter avstanden fra venstre til å være x-verdien
+        hinder.style.top = hinderE.x + "px";
+    }
+    function flytterFigur() {
+        figur.x = figur.x + figur.xfart*figur.xretning;
+        figur.y = figur.y + figur.yfart*figur.yretning;
+        firkant.style.left = figur.x + "px";
+        firkant.style.top = figur.y + "px";
+    }
+    function sjekkKollisjon(){
+        //Funksjon som sjekker om figuren treffer hinderet
+        if(figur.x + figur.bredde >= hinderE.x && figur.x <= hinderE.x + hinderE.bredde
+            && figur.y + figur.hoyde >= hinderE.y && figur.y <= hinderE.y + hinderE.hoyde){
+            levende = false;
+        }
+    }
+
+    //Setup
+    gameloop();
+
+</script>
+
+</body>
+</html>

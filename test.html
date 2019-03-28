@@ -46,10 +46,10 @@
 
     }
     function trefferVegg() {
-        if (firkant.xpos <= 0) {
+        if (firkant.xpos <= firkant.hoyde) {
             firkant.xretning = 1; //snur og går til høyre
         }
-        if (firkant.xpos + firkant.bredde >= minCanvas.width) {
+        if (firkant.xpos >= firkant.hoyde) {
             firkant.xretning = -1;
         }
 
@@ -62,6 +62,17 @@
     }
 
 
+    //function sjekkOmBallTrefferVegg() {
+    if (ball.xpos <= ball.radius){
+        ball.xretning = 1;
+    }
+    if (ball.ypos + ball.radius >= bane.hoyde){
+        ball.yretning = -1;
+    }
+    if (ball.ypos <= ball.radius){
+        ball.yretning = 1;
+    }
+    }
 
 
     gameloop();

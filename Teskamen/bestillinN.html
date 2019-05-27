@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bestillinger</title>
+    <style>
+        th{
+            background-color: orange;
+            width: 137px;
+            padding: 10px;
+            color: white;
+        }
+        select{
+            background-color: orange;
+            padding: 50px;
+            width: 137px;
+            margin: 10px;
+            color: white;
+        }
+        button{
+            background-color: orange;
+            color: white;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+<div id="bestilling">
+
+    <select id="antDagerSel">
+        <option>Antall dager</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+    </select>
+
+    <select id="antVokseneSel">
+        <option>Antall voksene</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+    </select>
+
+    <select id="antBarnSel">
+        <option>Antall barn</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+    </select>
+
+    <select id="antDestinasjonSel">
+        <option>By</option>
+        <option>Tronheim</option>
+        <option>Oslo</option>
+        <option>Tromsø</option>
+        <option>Bergen</option>
+        <option>Stavanger</option>
+    </select>
+</div>
+
+
+
+<div id="tabellDiv">
+    <table id="tabell">
+        <tr>
+            <th>Dager</th>
+            <th>Voksene</th>
+            <th>Barn</th>
+            <th>Destinasjon</th>
+        </tr>
+    </table>
+</div>
+
+
+<button id="bestill">Bestill</button>
+
+
+<script>
+    // referanser til HTML elemter
+    let antDagerSel = document.querySelector("#antDagerSel");
+    let antVokseneSel = document.querySelector("#antVokseneSel");
+    let antBarnSel = document.querySelector("#antBarnSel");
+    let antDestinasjonSel = document.querySelector("#antDestinasjonSel");
+    let tabell = document.querySelector("#tabell");
+    let bestill = document.querySelector("#bestill");
+
+    let bestillinger = [];
+
+    class nyBestilling{
+        constructor (antDager, antVoksene,antBarn, antDestinasjon){
+            this.antDager = antDager;
+            this.antVoksene = antVoksene;
+            this.antBarn = antBarn;
+            this.antDestinasjon = antDestinasjon;
+        }
+        lagTabell() {
+            tabell.innerHTML += `
+    <tr>
+        <td>${this.antDager}</td>
+        <td>${this.antVoksene}</td>
+        <td>${this.antBarn}</td>
+        <td>${this.antDestinasjon}</td>
+        </tr>
+        `
+        };
+
+    }
+
+
+    bestill.onclick = function () {
+        bestillinger.push(new nyBestilling(antDagerSel.value, antVokseneSel.value, antBarnSel.value, antDestinasjonSel.value));
+
+        tabell.innerHTML =`
+         <tr>
+            <th>Dager</th>
+            <th>Voksene</th>
+            <th>Barn</th>
+            <th>Destinasjon</th>
+        </tr>
+        `
+
+        for(let bestilling of bestillinger){
+            bestilling.lagTabell();
+        }
+
+    }
+
+
+
+</script>
+
+
+</body>
+</html></html>
